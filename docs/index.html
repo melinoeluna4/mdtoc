@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mdtoc — un índice para tus documentos Markdown</title>
+    <meta
+      name="description"
+      content="CLI en Go que genera una tabla de contenidos desde los headings de un archivo Markdown, ignorando bloques de código."
+    />
+    <link rel="canonical" href="https://melinoeluna4.github.io/mdtoc/" />
+    <meta property="og:title" content="mdtoc — Go CLI para índices Markdown" />
+    <meta property="og:description" content="Genera un TOC anidado desde un archivo o stdin." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://melinoeluna4.github.io/mdtoc/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#fbf7f0" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <header class="top">
+      <a class="brand" href="./">mdtoc</a>
+      <nav aria-label="Enlaces del proyecto">
+        <a href="https://github.com/melinoeluna4/mdtoc">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="https://melinoeluna4.github.io/proyectos/mdtoc/">Portfolio</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <aside class="toc" aria-labelledby="toc-title">
+        <p class="toc__title" id="toc-title">En esta página</p>
+        <ol>
+          <li><a href="#what">Qué es</a></li>
+          <li><a href="#install">Instalación</a></li>
+          <li><a href="#usage">Uso</a></li>
+          <li><a href="#flags">Flags</a></li>
+          <li><a href="#design">Decisiones</a></li>
+          <li><a href="#next">Más herramientas</a></li>
+        </ol>
+      </aside>
+
+      <main id="main">
+        <p class="eyebrow">Documentation · Go CLI</p>
+        <h1>mdtoc</h1>
+        <p class="lede">
+          Un README largo sin índice es un muro de texto. <strong>mdtoc</strong> lee los headings,
+          ignora los bloques de código y genera una tabla de contenidos anidada en una sola línea
+          de terminal.
+        </p>
+
+        <section id="what" aria-labelledby="what-title">
+          <h2 id="what-title">Qué es</h2>
+          <p>
+            Una CLI pequeña que convierte un documento Markdown en un índice navegable. Acepta un
+            archivo o stdin, respeta la jerarquía de <code>#</code> a <code>######</code> y genera
+            anchors al estilo GitHub.
+          </p>
+          <p>
+            Sin dependencias externas. El binario se instala con <code>go install</code> y funciona
+            igual en local que en un runner de CI.
+          </p>
+        </section>
+
+        <section id="install" aria-labelledby="install-title">
+          <h2 id="install-title">Instalación</h2>
+          <div class="code-card">
+            <pre><code>go install github.com/melinoeluna4/mdtoc@latest</code></pre>
+            <button
+              class="button"
+              type="button"
+              data-copy="go install github.com/melinoeluna4/mdtoc@latest"
+            >
+              Copiar
+            </button>
+          </div>
+        </section>
+
+        <section id="usage" aria-labelledby="usage-title">
+          <h2 id="usage-title">Uso</h2>
+          <p>Desde un archivo o desde una tubería. El resultado se pega en el documento.</p>
+          <pre class="terminal"><code>$ mdtoc README.md
+
+- [mdtoc](#mdtoc)
+  - [Why this exists](#why-this-exists)
+  - [Install](#install)
+  - [Usage](#usage)</code></pre>
+          <p>
+            Cambia la profundidad o el marcador:
+          </p>
+          <pre class="terminal"><code>cat README.md | mdtoc -max-depth 2
+mdtoc -bullet "*" docs/guide.md</code></pre>
+        </section>
+
+        <section id="flags" aria-labelledby="flags-title">
+          <h2 id="flags-title">Flags</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th scope="col">Flag</th><th scope="col">Default</th><th scope="col">Qué hace</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>-max-depth</code></td><td><code>3</code></td><td>Profundidad máxima de headings (1–6).</td></tr>
+                <tr><td><code>-bullet</code></td><td><code>-</code></td><td>Marcador de la lista.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="design" aria-labelledby="design-title">
+          <h2 id="design-title">Decisiones</h2>
+          <ul>
+            <li>Los bloques de código con ``` o ~~~ se ignoran: un <code>#</code> dentro de un ejemplo no es un heading.</li>
+            <li>Los slugs añaden <code>-0</code>, <code>-1</code> cuando dos headings se repiten.</li>
+            <li>El parser es deliberadamente pequeño: headings ATX, no un motor Markdown completo.</li>
+          </ul>
+        </section>
+
+        <section id="next" class="next" aria-labelledby="next-title">
+          <p class="eyebrow">Sigue explorando</p>
+          <h2 id="next-title">Más herramientas en Go</h2>
+          <div class="next-links">
+            <a href="https://melinoeluna4.github.io/envcheck/">envcheck <span>→</span></a>
+            <a href="https://melinoeluna4.github.io/portwait/">portwait <span>→</span></a>
+            <a href="https://melinoeluna4.github.io/httpcheck/">httpcheck <span>→</span></a>
+            <a href="https://melinoeluna4.github.io/treehash/">treehash <span>→</span></a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="bottom">
+      <p>mdtoc · una herramienta de <a href="https://melinoeluna4.github.io/">Melinoe Luna</a></p>
+      <p><a href="https://github.com/melinoeluna4/mdtoc">README</a> · <a href="https://melinoeluna4.github.io/proyectos/mdtoc/">Ficha</a></p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
